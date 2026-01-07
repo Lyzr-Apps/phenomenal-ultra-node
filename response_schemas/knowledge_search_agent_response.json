@@ -1,0 +1,56 @@
+{
+  "agent_name": "Knowledge Search Agent",
+  "agent_id": "695e4164e02ec0b2d8e5688a",
+  "agent_purpose": "research",
+  "description": "Provides answers with source citations from knowledge base, including document names, page numbers, and relevant excerpts",
+  "response_schema": {
+    "status": "string (success|error)",
+    "result": {
+      "answer": "string",
+      "sources": [
+        {
+          "title": "string",
+          "url": "string (optional)",
+          "relevance": "number (0-1)"
+        }
+      ],
+      "confidence": "number (0-1)",
+      "related_topics": [
+        "string"
+      ],
+      "follow_up_questions": [
+        "string (optional)"
+      ]
+    },
+    "metadata": {
+      "agent_name": "string",
+      "timestamp": "string (ISO)"
+    }
+  },
+  "example_response": {
+    "status": "success",
+    "result": {
+      "answer": "Based on the research, the answer is...",
+      "sources": [
+        {
+          "title": "Source Document",
+          "url": "https://example.com",
+          "relevance": 0.95
+        }
+      ],
+      "confidence": 0.88,
+      "related_topics": [
+        "Topic A",
+        "Topic B"
+      ],
+      "follow_up_questions": [
+        "What about X?",
+        "How does Y affect this?"
+      ]
+    },
+    "metadata": {
+      "agent_name": "Knowledge Search Agent",
+      "timestamp": "2025-01-15T10:30:00Z"
+    }
+  }
+}
