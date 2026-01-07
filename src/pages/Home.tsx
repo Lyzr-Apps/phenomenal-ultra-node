@@ -14,6 +14,7 @@ import {
   Loader2,
   ChevronUp,
   AlertCircle,
+  Search,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -163,13 +164,16 @@ export default function Home() {
   const parseResponseWithCitations = (
     text: string
   ): { content: string; sources: Source[]; citations: Citation[] } => {
+    // Ensure text is a string
+    const textStr = typeof text === 'string' ? text : String(text || '')
+
     const citations: Citation[] = []
-    let content = text
+    let content = textStr
 
     // Extract citations like [1], [2], etc.
     const citationRegex = /\[(\d+)\]/g
     let match
-    while ((match = citationRegex.exec(text)) !== null) {
+    while ((match = citationRegex.exec(textStr)) !== null) {
       citations.push({
         id: parseInt(match[1]),
         sourceIndex: parseInt(match[1]) - 1,
@@ -181,7 +185,7 @@ export default function Home() {
     const sources: Source[] = documents.slice(0, Math.max(2, citations.length)).map((doc, idx) => ({
       documentName: doc.name,
       pageNumber: Math.floor(Math.random() * doc.pages) + 1,
-      excerpt: text.substring(0, 150) + '...',
+      excerpt: textStr.substring(0, 150) + '...',
       relevance: 0.95 - idx * 0.1,
     }))
 
@@ -323,7 +327,9 @@ export default function Home() {
             // Empty State
             <div className='flex-1 flex flex-col items-center justify-center px-6'>
               <div className='text-center max-w-md'>
-                <div className={cn('text-5xl mb-4 opacity-20')}>🔍</div>
+                <div className={cn('mb-4 opacity-20 flex justify-center')}>
+                  <Search className='h-16 w-16' />
+                </div>
                 <h2 className='text-2xl font-bold mb-2'>Welcome to Knowledge Search</h2>
                 <p className={cn('text-sm mb-8', isDark ? 'text-slate-400' : 'text-slate-600')}>
                   Upload documents and ask questions about them. The AI will search through your documents and provide
